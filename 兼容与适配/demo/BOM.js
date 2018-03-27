@@ -19,3 +19,14 @@ function getQueryStringArgs() {
     }
     return args
 }
+
+// 倒计时  
+var num = 10
+timer = setInterval(function(){
+    num --
+    console.log(num)
+    if(num == 0) {
+        clearInterval(timer)
+        console.log('Done')
+    }
+}, 1000)

@@ -5,7 +5,8 @@
 [Nginx能为前端开发带来什么](http://imweb.io/topic/56386972d12b230c26e1a17d)   
 [nginx服务器安装及配置文件详情](https://segmentfault.com/a/1190000002797601) 
 [nginx基本入门](https://ivweb.io/topic/58427dfb270eedfd10a0f5ea)   
-[做个前端，来点Nginx吧](http://www.imooc.com/article/20200)
+[做个前端，来点Nginx吧](http://www.imooc.com/article/20200)  
+[前端 Nginx 使用札记](https://mp.weixin.qq.com/s?__biz=MjM5NTEwMTAwNg==&mid=2650214414&idx=1&sn=d29aa3ea03c2ba6fda9d902325401039&chksm=befe102f89899939e93e6b6a6aeccd806f8af7be19ce2ddfcef846627e6e6ddda044429ab2aa&mpshare=1&scene=23&srcid=03271dufeEPPRa9QxwUC49G5#rd)
 
 ## 一、什么是Nginx 
 

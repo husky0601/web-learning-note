@@ -21,12 +21,24 @@ function getQueryStringArgs() {
 }
 
 // 倒计时  
+// var num = 10
+// timer = setInterval(function(){
+//     num --
+//     console.log(num)
+//     if(num == 0) {
+//         clearInterval(timer)
+//         console.log('Done')
+//     }
+// }, 1000)
+
 var num = 10
-timer = setInterval(function(){
-    num --
+var timer = function(){
+    num--
     console.log(num)
-    if(num == 0) {
-        clearInterval(timer)
+    if(num > 0){
+        setTimeout(timer, 1000)
+    }else {
         console.log('Done')
     }
-}, 1000)
+}
+setTimeout(timer,1000)

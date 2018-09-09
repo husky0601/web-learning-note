@@ -54,3 +54,4 @@ class A extends ReactComponent {
     }
 }  
 ```  
+当创建了组件A后，继承了ReactComponent方法，如果要将组件A渲染到DOM上，需通过render()方法进行渲染

@@ -46,12 +46,84 @@ module.exports = ReactComponent
 在创建组件时，便可通过 class 类方法继承 ReactComponent 方法，并且使用其原型链上的方法
 
 ```
-class A extends ReactComponent {
-    render() {
-        return {
-            <div>Component A </div>
-        }
+class View extends React.Component{
+    render () {
+        return(
+            <div className="wrapper--outer">
+            <App />
+            <div className="wrapper1--inner" style={{ color: "#38f" }}>
+              hello world
+            </div>
+            <div className="wrapper2--inner">hello world</div>
+          </div>
+        )
     }
-}  
+}
+ReactDOM.render(<View />, document.getElementById("root"));
 ```  
-当创建了组件A后，继承了ReactComponent方法，如果要将组件A渲染到DOM上，需通过render()方法进行渲染
+当创建了组件A后，继承了ReactComponent方法，如果要将组件A渲染到DOM上，需通过render()方法进行渲染。 
+
+```
+var View = function (_React$Component) {
+    _inherits(View, _React$Component);
+
+    function View() {
+        _classCallCheck(this, View);
+
+        return _possibleConstructorReturn(this, (View.__proto__ || Object.getPrototypeOf(View)).apply(this, arguments));
+    }
+
+    _createClass(View, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { className: "wrapper--outer", __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 27
+                    },
+                    __self: this
+                },
+                React.createElement(__WEBPACK_IMPORTED_MODULE_0__App__["a" /* default */], {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 28
+                    },
+                    __self: this
+                }),
+                React.createElement(
+                    "div",
+                    { className: "wrapper1--inner", style: { color: "#38f" }, __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 29
+                        },
+                        __self: this
+                    },
+                    "hello world"
+                ),
+                React.createElement(
+                    "div",
+                    { className: "wrapper2--inner", __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 32
+                        },
+                        __self: this
+                    },
+                    "hello world"
+                )
+            );
+        }
+    }]);
+
+    return View;
+}(React.Component);
+
+ReactDOM.render(React.createElement(View, {
+    __source: {
+        fileName: _jsxFileName,
+        lineNumber: 38
+    },
+    __self: this
+}), document.getElementById("root"));
+
+```

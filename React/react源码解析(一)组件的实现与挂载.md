@@ -287,7 +287,8 @@ var nextWrappedElement = React.createElement(TopLevelWrapper, {
 | node | 实际参数 | instance |
 | -- | -- | -- |
 | `null/false` | 空 | 创建`ReactEmptyComponen`t 组件 |
-| `object && type !==string` | React 组件| 创建`ReactCompositeComponent`组件 |
+| `object && type ===string` | React 组件| 创建`ReactCompositeComponent`组件 |
+| `object && type !==string` | 虚拟DOM | 创建`ReactDOMComponent`组件 |
 | `string` | 字符串 | 创建`ReactTextComponent`组件 |
 | `number` | 数字| 创建`ReactTextComponent`组件|
 

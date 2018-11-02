@@ -29,4 +29,4 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 安装完了之后，查看cnpm版本的时候，发现cmd提示cnmp不是内部或外部的指令，这就需要给cnpm配置环境，右击电脑`属性 -> 高级系统设置 -> 环境变量 -> 系统变量中的Path` 进行编辑，之前更改了全局模块安装路径，当全局安装模块的时候，文件就会自动存储在`node_global`文件中，所以在系统变量中增加`D:\NodeJs\node_global`的`Path`配置，然后重新打开cmd，`cnpm -v`
 ![](./img/2.png)  
 
-### 4、全局安装模块
+### 4、全局安装模块  

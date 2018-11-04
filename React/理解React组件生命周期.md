@@ -5,7 +5,7 @@
 在 ReactDOM.render()的时候会根据传入的参数类型，在`instantiateReactComponent`方法中进行输出四种不同的组件
 
 - ReactEmptyComponent: (react-15-stable/src/renderers/shared/ReactDOMEmptyComponent.js)
-- ReactTextComponent:(react-15-stable/src/renderers/shared/ReactDOMEmptyComponent.js)
+- ReactTextComponent:(react-15-stable/src/renderers/shared/ReactDOMTextComponent.js)
 - ReactDOMComponent:(react-15-stable/src/renderers/shared/ReactDOMEmptyComponent.js)
 - ReactCompositeComponent:(react-15-stable/src/renderers/shared/stack/reconciler/ReactCompositeComponent.js)
 
@@ -68,13 +68,100 @@ module.exports = ReactDOMEmptyComponent;
 ```
 
 **2、ReactTextComponent**
-
+ReactTextComponent是通过`ReactHostComponent.createInstanceForText()`方法创建的。其处理逻辑与操作`ReactEmptyComponent`相似，但是在挂载流程中判断其没有标签，就会通过`escapeTextContentForBrowser`方法对参数进行空格的校验处理，最终以简单的' '+参数方法将参数转化为字符串并返回。
 ```
-ReactHostComponent.injection.injectTextComponentClass( ReactNativeTextComponent );
-ReactInjection.HostComponent.injectTextComponentClass(ReactDOMTextComponent);
+mountComponent: function(transaction,hostParent,hostContainerInfo,context) {
+  var domID = hostContainerInfo._idCounter++;
+  var openingValue = ' react-text: ' + domID + ' ';
+  var closingValue = ' /react-text ';
+  this._domID = domID;
+  this._hostParent = hostParent;
+  if (transaction.useCreateElement) {
+    var ownerDocument = hostContainerInfo._ownerDocument;
+    var openingComment = ownerDocument.createComment(openingValue);
+    var closingComment = ownerDocument.createComment(closingValue);
+    var lazyTree = DOMLazyTree(ownerDocument.createDocumentFragment());
+    DOMLazyTree.queueChild(lazyTree, DOMLazyTree(openingComment));
+    if (this._stringText) {
+      DOMLazyTree.queueChild(
+        lazyTree,
+        DOMLazyTree(ownerDocument.createTextNode(this._stringText)),
+      );
+    }
+    DOMLazyTree.queueChild(lazyTree, DOMLazyTree(closingComment));
+    ReactDOMComponentTree.precacheNode(this, openingComment);
+    this._closingComment = closingComment;
+    return lazyTree;
+  } else {
+    var escapedText = escapeTextContentForBrowser(this._stringText);
+
+    if (transaction.renderToStaticMarkup) {
+      // Normally we'd wrap this between comment nodes for the reasons stated
+      // above, but since this is a situation where React won't take over
+      // (static pages), we can simply return the text as it is.
+      return escapedText;
+    }
+
+    return (
+      '<!--' +
+      openingValue +
+      '-->' +
+      escapedText +
+      '<!--' +
+      closingValue +
+      '-->'
+    );
+  }
+}
 ```
 
 **3、ReactDOMComponent**
+该组件是通过reacthHostComponent.createInternalComponent()方法创建，其处理流程与上述两类组件基本相同，由于dom元素同样没有生命周期，ReactDOMComponent会对传入的标签通过`switch`方式进行识别和处理。
+```
+mountComponent: function(transaction,hostParent,hostContainerInfo,context) {
+    this._rootNodeID = globalIdCounter++;
+    this._domID = hostContainerInfo._idCounter++;
+    this._hostParent = hostParent;
+    this._hostContainerInfo = hostContainerInfo;
+
+    var props = this._currentElement.props;
+
+    switch (this._tag) {
+      case 'audio':
+      case 'form':
+      case 'iframe':
+      case 'img':
+      case 'link':
+      case 'object':
+      case 'source':
+      case 'video':
+        // ...
+        break;
+    }
+
+    if (transaction.useCreateElement) {
+      var ownerDocument = hostContainerInfo._ownerDocument;
+      var el;
+      if (namespaceURI === DOMNamespaces.html) {
+        if (this._tag === 'script') {
+          var div = ownerDocument.createElement('div');
+          var type = this._currentElement.type;
+          div.innerHTML = `<${type}></${type}>`;
+          el = div.removeChild(div.firstChild);
+        } else if (props.is) {
+          el = ownerDocument.createElement(this._currentElement.type, props.is);
+        } else {
+          el = ownerDocument.createElement(this._currentElement.type);
+        }
+      } else {
+        el = ownerDocument.createElementNS(
+          namespaceURI,
+          this._currentElement.type,
+        );
+      }
+
+}
+```
 
 **4、ReactCompositeComponent**  
 自定义组件是通过 ReactCompositeComponentWrapper()创建,生命周期的实现流程是在 ReactCompositeComponent()方法中实现的。

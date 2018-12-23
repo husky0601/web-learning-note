@@ -4,13 +4,9 @@
 
 在 ReactDOM.render()的时候会根据传入的参数类型，在`instantiateReactComponent`方法中进行输出四种不同的组件
 
-- ReactEmptyComponent: (react-15-stable/src/renderers/shared/ReactDOMEmptyComponent.js)
-- ReactTextComponent:(react-15-stable/src/renderers/shared/ReactDOMTextComponent.js)
-- ReactDOMComponent:(react-15-stable/src/renderers/shared/ReactDOMEmptyComponent.js)
-- ReactCompositeComponent:(react-15-stable/src/renderers/shared/stack/reconciler/ReactCompositeComponent.js)
 
 **1、ReactEmptyComponent**  
-ReactEmptyComponent 通过 create()方法创建，并最终调用 ReactDOMEmptyComponent 方法。因为该方法渲染出一个空组件，所以插入到真实 DOM 中也为空
+`ReactEmptyComponent` 通过 `create()`方法创建，并最终调用 `ReactDOMEmptyComponent` 方法。因为该方法渲染出一个空组件，所以插入到真实 DOM 中也为空
 
 ```
 // create 创建空组件
